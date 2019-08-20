@@ -17,3 +17,71 @@
 // </div>
 //
 // Create a card for each of the articles and add the card to the DOM.
+
+// axios
+axios.get("https://lambda-times-backend.herokuapp.com/articles")
+    .then(res => {
+        const { bootstrap, javascript, jquery, node, technology } = res.data.articles
+        
+        console.log(bootstrap)
+
+        bootstrap.map(card => {
+        const cardDiv = document.querySelector('.cards-container')
+        cardDiv.appendChild(cardCreator(card))
+       })
+       javascript.map(card => {
+        const cardDiv = document.querySelector('.cards-container')
+        cardDiv.appendChild(cardCreator(card))
+       })
+       jquery.map(card => {
+        const cardDiv = document.querySelector('.cards-container')
+        cardDiv.appendChild(cardCreator(card))
+       })
+       node.map(card => {
+        const cardDiv = document.querySelector('.cards-container')
+        cardDiv.appendChild(cardCreator(card))
+       })
+       technology.map(card => {
+        const cardDiv = document.querySelector('.cards-container')
+        cardDiv.appendChild(cardCreator(card))
+       })
+
+    })
+    
+    .catch(err => console.log(err))
+
+// component
+function cardCreator(card) {
+    // <div class="card"></div>
+    const divParent = document.createElement('div')
+    divParent.classList.add('card')
+
+    // <div class="headline">{Headline of article}</div>
+    const divHeadline = document.createElement('div')
+    divHeadline.classList.add('headline')
+    divHeadline.textContent = card.headline
+    divParent.appendChild(divHeadline)
+
+    // <div class="author">
+    const divAuthor = document.createElement('div')
+    divAuthor.classList.add('author')
+    divParent.appendChild(divAuthor)
+
+    // <div class="img-container">
+    const divImg = document.createElement('div')
+    divImg.classList.add('img-container')
+    divAuthor.appendChild(divImg)
+
+    // <img src={url of authors image} />
+    const img = document.createElement('img')
+    img.src = card.authorPhoto
+    divImg.appendChild(img)
+
+    // <span>By {authors name}</span>
+    const span = document.createElement('span')
+    span.textContent = card.authorName
+    divAuthor.appendChild(span)
+
+    return divParent
+
+}
